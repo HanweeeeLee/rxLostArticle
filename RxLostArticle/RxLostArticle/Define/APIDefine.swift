@@ -111,6 +111,37 @@ enum LostPlaceType:String,CaseIterable {
         }
     }
     
+    static public func getKoreanFromLostPlaceType(type:LostPlaceType) -> String {
+        var returnStr:String = ""
+        switch type {
+        case .bus:
+            returnStr = "버스"
+            break
+        case .villageBus:
+            returnStr = "마을버스"
+            break
+        case .corporateTaxi:
+            returnStr = "법인택시"
+            break
+        case .privateTaxi:
+            returnStr = "개인택시"
+            break
+        case .subway1_4:
+            returnStr = "지하철(1~4호선)"
+            break
+        case .subway5_8:
+            returnStr = "지하철(5~8호선)"
+            break
+        case .subway9:
+            returnStr = "지하철(9호선)"
+            break
+        case .korail:
+            returnStr = "코레일"
+            break
+        }
+        return returnStr
+    }
+    
     static public func allEnumKoreanArray() -> Array<koreanLostPlaceType> {
         var resultArr:Array = Array<String>()
         for value in LostPlaceType.allCases {
