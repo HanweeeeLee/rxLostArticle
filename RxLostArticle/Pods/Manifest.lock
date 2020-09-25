@@ -1,0 +1,74 @@
+PODS:
+  - Alamofire (5.2.2)
+  - Hero (1.5.0)
+  - ReactorKit (2.1.0):
+    - RxSwift (~> 5.0)
+    - WeakMapTable (~> 1.1)
+  - RxCocoa (5.1.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.1.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.1.1)
+  - SDWebImage (5.9.1):
+    - SDWebImage/Core (= 5.9.1)
+  - SDWebImage/Core (5.9.1)
+  - SkeletonView (1.9)
+  - SnapKit (5.0.1)
+  - SwiftyJSON (4.3.0)
+  - SwipeTransition (0.4.2)
+  - SwipeTransitionAutoSwipeBack (0.4.2):
+    - SwipeTransition (~> 0.4.2)
+  - Then (2.7.0)
+  - WeakMapTable (1.1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 5.2)
+  - Hero
+  - ReactorKit
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
+  - SDWebImage (~> 5.0)
+  - SkeletonView
+  - SnapKit (~> 5.0.0)
+  - SwiftyJSON (~> 4.0)
+  - SwipeTransition
+  - SwipeTransitionAutoSwipeBack
+  - Then
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Hero
+    - ReactorKit
+    - RxCocoa
+    - RxRelay
+    - RxSwift
+    - SDWebImage
+    - SkeletonView
+    - SnapKit
+    - SwiftyJSON
+    - SwipeTransition
+    - SwipeTransitionAutoSwipeBack
+    - Then
+    - WeakMapTable
+
+SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Hero: b7385b75e7259da62f4f85462f59a5082d66b058
+  ReactorKit: 12a93358c554bb3f167b16b14c40374fa9cd5acd
+  RxCocoa: 32065309a38d29b5b0db858819b5bf9ef038b601
+  RxRelay: d77f7d771495f43c556cbc43eebd1bb54d01e8e9
+  RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
+  SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
+  SkeletonView: f72ac4df69730e48324efae062ba580c2fce974d
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  SwipeTransition: 03f6f995646bdff37946af75c442692b011cb348
+  SwipeTransitionAutoSwipeBack: 64605a9e0d9bef917ba23f26f23bbe3ce8af4158
+  Then: acfe0be7e98221c6204e12f8161459606d5d822d
+  WeakMapTable: d0327eda092be6a8f7c532942ae98dc7948f5d32
+
+PODFILE CHECKSUM: 67ea70a339dd6667459247e6282c346caa6e5576
+
+COCOAPODS: 1.9.1
