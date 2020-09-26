@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 protocol ToolbarPickerViewDelegate: class {
-    func didTapDone()
-    func didTapCancel()
+    func didTapDone(fromPickerView:ToolbarPickerView)
+    func didTapCancel(fromPickerView:ToolbarPickerView)
 }
 
 class ToolbarPickerView: UIPickerView {
@@ -46,10 +46,10 @@ class ToolbarPickerView: UIPickerView {
     }
 
     @objc func doneTapped() {
-        self.toolbarDelegate?.didTapDone()
+        self.toolbarDelegate?.didTapDone(fromPickerView: self)
     }
 
     @objc func cancelTapped() {
-        self.toolbarDelegate?.didTapCancel()
+        self.toolbarDelegate?.didTapCancel(fromPickerView: self)
     }
 }

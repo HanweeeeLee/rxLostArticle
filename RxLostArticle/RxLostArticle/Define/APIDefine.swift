@@ -7,7 +7,7 @@
 //
 import UIKit
 
-enum LostArticleType:String,CaseIterable {
+enum LostArticleType:String,CaseIterable,Equatable {
     case wallet = "지갑"
     case shoppingBag = "쇼핑백"
     case briefcase = "서류봉투"
@@ -85,7 +85,7 @@ enum LostArticleType:String,CaseIterable {
     }
 }
 
-enum LostPlaceType:String,CaseIterable {
+enum LostPlaceType:String,CaseIterable,Equatable {
     case bus = "b1" //버스
     case villageBus = "b2" //마을버스
     case corporateTaxi = "t1" //법인택시

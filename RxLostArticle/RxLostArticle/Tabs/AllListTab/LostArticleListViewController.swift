@@ -31,6 +31,9 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     let typePickerView:ToolbarPickerView = ToolbarPickerView()
     let placePickerView:ToolbarPickerView = ToolbarPickerView()
     
+    var allArticleTypeNameArr:Array<LostArticleType.koreanLostArticleType> = LostArticleType.allEnumKoreanArray()
+    var allPlaceNameArr:Array<LostPlaceType.koreanLostPlaceType> = LostPlaceType.allEnumKoreanArray()
+    
     //MARK: lifeCycle
     
     override func viewDidLoad() {
@@ -49,6 +52,18 @@ class LostArticleListViewController: UIViewController,StoryboardView {
             .subscribe(onNext: { [weak self] data in
                 self?.tableView.reloadData()
             }).disposed(by: self.disposeBag)
+        
+        reactor.state.map{ $0.selectedPlace
+        }.distinctUntilChanged()
+        .subscribe(onNext: { [weak self] value in
+            self?.articlePlaceTextField.text = LostPlaceType.getKoreanFromLostPlaceType(type: self!.viewModel.currentState.selectedPlace)
+        }).disposed(by: self.disposeBag)
+        
+        reactor.state.map{ $0.selectedType
+        }.distinctUntilChanged()
+        .subscribe(onNext: { [weak self] value in
+            self?.articleTypeTextField.text = self?.viewModel.currentState.selectedType.rawValue
+        }).disposed(by: self.disposeBag)
         
     }
     
@@ -83,23 +98,18 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.articlePlaceTextField.inputView = self.placePickerView
         self.articlePlaceTextField.text = LostPlaceType.getKoreanFromLostPlaceType(type: self.viewModel.currentState.selectedPlace)
         self.articlePlaceTextField.tintColor = .clear
+        self.articlePlaceTextField.inputAccessoryView = self.placePickerView.toolbar
         
         self.typePickerView.delegate = self
         self.typePickerView.dataSource = self
+        self.typePickerView.toolbarDelegate = self
+        
         self.placePickerView.delegate = self
         self.placePickerView.dataSource = self
+        self.placePickerView.toolbarDelegate = self
     }
     
     //MARK: action
-    
-    @objc func doneTapped(_ recognizer: UITapGestureRecognizer) {
-        
-    }
-    
-    @objc func cancelTapped(_ recognizer: UITapGestureRecognizer) {
-        
-    }
-
 }
 
 extension LostArticleListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -142,7 +152,9 @@ extension LostArticleListViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostArticleType1TableViewCell", for: indexPath) as! LostArticleType1TableViewCell
         self.viewModel.state.subscribe(onNext: {
-            cell.infoData = $0.lostArticleData[indexPath.row]
+            if $0.lostArticleData.count-1 >= indexPath.row {
+                cell.infoData = $0.lostArticleData[indexPath.row]
+            }
         }).disposed(by: self.disposeBag)
         cell.selectionStyle = .none
         return cell
@@ -153,13 +165,14 @@ extension LostArticleListViewController: UITableViewDelegate, UITableViewDataSou
         
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
     
 }
 
-extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSource {
+extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSource,ToolbarPickerViewDelegate {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -178,14 +191,41 @@ extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSou
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         var returnValue:String = ""
         if pickerView === self.placePickerView {
-            returnValue = LostPlaceType.getKoreanFromLostPlaceType(type: LostPlaceType.allCases[row])
+            returnValue = self.allPlaceNameArr[row]
         }
         else if pickerView === self.typePickerView {
-            returnValue = LostArticleType.allCases[row].rawValue
-            
+            returnValue = self.allArticleTypeNameArr[row]
         }
         return returnValue
     }
     
+    func didTapDone(fromPickerView: ToolbarPickerView) {
+        if fromPickerView === self.placePickerView {
+            let place = self.allPlaceNameArr[fromPickerView.selectedRow(inComponent: 0)]
+            self.reactor?.action.onNext(.updateArticleList(place:LostPlaceType.getEnumFromKoreanType(korean: place), type: self.viewModel.currentState.selectedType))
+        }
+        else if fromPickerView === self.typePickerView {
+            let type = self.allArticleTypeNameArr[fromPickerView.selectedRow(inComponent: 0)]
+            
+            self.reactor?.action.onNext(.updateArticleList(place:self.viewModel.currentState.selectedPlace, type: LostArticleType.getEnumFromKoreanType(korean: type)))
+        }
+        else {
+            
+        }
+        self.view.endEditing(true)
+    }
+    
+    func didTapCancel(fromPickerView: ToolbarPickerView) {
+        if fromPickerView == self.placePickerView {
+            
+        }
+        else if fromPickerView == self.typePickerView {
+            
+        }
+        else {
+            
+        }
+        self.view.endEditing(true)
+    }
     
 }
