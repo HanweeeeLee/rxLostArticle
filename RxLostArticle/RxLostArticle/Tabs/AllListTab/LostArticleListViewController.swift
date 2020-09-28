@@ -50,6 +50,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         reactor.state.map{ $0.lostArticleData }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] data in
+                print("articleData:\(data)")
                 self?.tableView.reloadData()
             }).disposed(by: self.disposeBag)
         
@@ -63,6 +64,14 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         }.distinctUntilChanged()
         .subscribe(onNext: { [weak self] value in
             self?.articleTypeTextField.text = self?.viewModel.currentState.selectedType.rawValue
+        }).disposed(by: self.disposeBag)
+        
+        reactor.state.map{
+            $0.error
+        }
+        .compactMap{ $0 }
+        .subscribe(onNext: { [weak self] value in
+            print("value:\(value)")
         }).disposed(by: self.disposeBag)
         
     }
