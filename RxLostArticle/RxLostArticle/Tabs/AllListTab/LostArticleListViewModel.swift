@@ -42,6 +42,7 @@ class LostArticleListViewModel: Reactor {
         var currentPage:Int = 0
         var lostArticleData:Array<LostArticleModel> = Array()
         var error:Error?
+        var serverErr:String?
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -143,6 +144,7 @@ class LostArticleListViewModel: Reactor {
                 print("해당하는 데이터가 없습니다.")
                 print("error msg:\(json["RESULT"]["MESSAGE"].stringValue)")
                 newState.lostArticleData.removeAll()
+                newState.serverErr = json["RESULT"]["CODE"].stringValue
             }
             else {
                 // error 처리

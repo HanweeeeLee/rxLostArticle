@@ -26,6 +26,8 @@
 		4FBCAF39251D6F9E002234F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBCAF37251D6F9E002234F6 /* Main.storyboard */; };
 		4FBCAF3B251D6FA2002234F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FBCAF3A251D6FA2002234F6 /* Assets.xcassets */; };
 		4FBCAF3E251D6FA2002234F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBCAF3C251D6FA2002234F6 /* LaunchScreen.storyboard */; };
+		782E85E925238BA1007E1541 /* NoResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E85E825238BA1007E1541 /* NoResultView.swift */; };
+		782E85EC25238BAC007E1541 /* NoResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782E85EB25238BAC007E1541 /* NoResultView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		4FBCAF3A251D6FA2002234F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FBCAF3D251D6FA2002234F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FBCAF3F251D6FA2002234F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		782E85E825238BA1007E1541 /* NoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultView.swift; sourceTree = "<group>"; };
+		782E85EB25238BAC007E1541 /* NoResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultView.xib; sourceTree = "<group>"; };
 		81F70B16D291C8A8ABFC930C /* Pods-RxLostArticle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxLostArticle.release.xcconfig"; path = "Target Support Files/Pods-RxLostArticle/Pods-RxLostArticle.release.xcconfig"; sourceTree = "<group>"; };
 		9F66D55AF57DCD045EAC0AB4 /* Pods_RxLostArticle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxLostArticle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -88,6 +92,8 @@
 			children = (
 				4F7452BF2522FAF6001BDF10 /* HWTableView.swift */,
 				4F10A02E251DC7CD00F053A7 /* ToobarPickerView.swift */,
+				782E85E825238BA1007E1541 /* NoResultView.swift */,
+				782E85EB25238BAC007E1541 /* NoResultView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -299,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBCAF3E251D6FA2002234F6 /* LaunchScreen.storyboard in Resources */,
+				782E85EC25238BAC007E1541 /* NoResultView.xib in Resources */,
 				4FBCAF3B251D6FA2002234F6 /* Assets.xcassets in Resources */,
 				4F10A028251D7F7400F053A7 /* LostArticleType1TableViewCell.xib in Resources */,
 				4FBCAF39251D6F9E002234F6 /* Main.storyboard in Resources */,
@@ -358,6 +365,7 @@
 				4F109FFD251D737200F053A7 /* HWDataProtocol.swift in Sources */,
 				4F7452C02522FAF6001BDF10 /* HWTableView.swift in Sources */,
 				4F10A000251D737F00F053A7 /* DataApiManager.swift in Sources */,
+				782E85E925238BA1007E1541 /* NoResultView.swift in Sources */,
 				4F10A02F251DC7CD00F053A7 /* ToobarPickerView.swift in Sources */,
 				4FBCAF32251D6F9E002234F6 /* AppDelegate.swift in Sources */,
 				4F10A02C251D811000F053A7 /* LostArticleModel.swift in Sources */,

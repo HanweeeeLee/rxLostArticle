@@ -57,11 +57,12 @@ class LostArticleListViewController: UIViewController,StoryboardView {
             .subscribe(onNext: { [weak self] isLoading in
                 if isLoading {
                     print("loading start")
-                    self?.tableView.showSkeletonViewAndInit()
+                    self?.tableView.hideNoResultView()
+                    self?.tableView.showSkeletonHW()
                 }
                 else {
                     print("loading end")
-                    self?.tableView.hideSkeletonViewAndConnectMyCustomProtocol()
+                    self?.tableView.hideSkeletonHW()
 //                    self?.tableView.reloadData()
                 }
             }).disposed(by: self.disposeBag)
@@ -90,7 +91,17 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         }
         .compactMap{ $0 }
         .subscribe(onNext: { [weak self] value in
-            print("value:\(value)")
+            print("error value:\(value)")
+        }).disposed(by: self.disposeBag)
+        
+        reactor.state.map {
+            $0.serverErr
+        }
+        .compactMap{ $0 }
+        .distinctUntilChanged()// 나중에 nil로 set하면서 제거해야함
+        .subscribe(onNext: { [weak self] value in
+            print("server error value:\(value)")
+            self?.tableView.showNoResultView()
         }).disposed(by: self.disposeBag)
         
     }
@@ -107,6 +118,8 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.addNoResultView((NoResultView.loadFromNibNamed(nibNamed: "NoResultView") as! NoResultView))
+        self.tableView.hideNoResultView()
         
         self.articleTypeTitleLabel.textColor = .black
         self.articleTypeTitleLabel.text = "타입"
