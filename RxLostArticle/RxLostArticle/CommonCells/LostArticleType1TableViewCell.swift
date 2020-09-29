@@ -36,7 +36,7 @@ class LostArticleType1TableViewCell: UITableViewCell {
     //MARK: func
     
     func initUI() {
-        self.mainContainerView.backgroundColor = CommonDefine.themeColor3
+        self.mainContainerView.backgroundColor = .clear
         self.nameLabel.textColor = .black
         self.placeLabel.textColor = .black
         self.dateLabel.textColor = .black

@@ -125,7 +125,7 @@ class LostArticleListViewModel: Reactor {
         case let .setLoading(isLoading):
             newState.isLoading = isLoading
         case let .updateArticleList(json,place,type):
-            print("json:\(json)")
+//            print("json:\(json)")
             if json["SearchLostArticleService"]["RESULT"]["CODE"] == "INFO-000" {
                 newState.selectedPlace = place
                 newState.selectedType = type
@@ -142,6 +142,7 @@ class LostArticleListViewModel: Reactor {
             else if json["RESULT"]["CODE"].stringValue == "INFO-200" { //데이터 없음
                 print("해당하는 데이터가 없습니다.")
                 print("error msg:\(json["RESULT"]["MESSAGE"].stringValue)")
+                newState.lostArticleData.removeAll()
             }
             else {
                 // error 처리
@@ -161,6 +162,7 @@ class LostArticleListViewModel: Reactor {
             .observeOn(MainScheduler.instance)
             .retry(3)
             .map{
+                usleep(1 * 1000 * 1000)
                 return .success($0)
             }
             .catchError{

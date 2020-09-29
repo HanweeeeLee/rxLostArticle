@@ -9,6 +9,7 @@ import UIKit
 import ReactorKit
 import RxCocoa
 import Then
+import SkeletonView
 
 class LostArticleListViewController: UIViewController,StoryboardView {
     //MARK: outlet
@@ -22,7 +23,8 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     @IBOutlet weak var articlePlaceTitleLabel: UILabel!
     @IBOutlet weak var articlePlaceTextFieldContainerView: UIView!
     @IBOutlet weak var articlePlaceTextField: UITextField!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: HWTableView!
+    
     
     //MARK: property
     var disposeBag:DisposeBag = DisposeBag()
@@ -44,13 +46,30 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         print("test:\(APIDefine.getLostArticleAPIAddress(startIndex: 0, endIndex: 10, type: .bag, place: .bus, searchTxt: nil))")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.reactor?.action.onNext(.updateArticleList(place: reactor!.currentState.selectedPlace, type: reactor!.currentState.selectedType))
+    }
+    
     func bind(reactor: LostArticleListViewModel) {
-        reactor.action.onNext(.updateArticleList(place: reactor.currentState.selectedPlace, type: reactor.currentState.selectedType))
+        
+        reactor.state.map { $0.isLoading }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] isLoading in
+                if isLoading {
+                    print("loading start")
+                    self?.tableView.showSkeletonViewAndInit()
+                }
+                else {
+                    print("loading end")
+                    self?.tableView.hideSkeletonViewAndConnectMyCustomProtocol()
+//                    self?.tableView.reloadData()
+                }
+            }).disposed(by: self.disposeBag)
         
         reactor.state.map{ $0.lostArticleData }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] data in
-                print("articleData:\(data)")
+//                print("articleData:\(data)")
                 self?.tableView.reloadData()
             }).disposed(by: self.disposeBag)
         
@@ -84,7 +103,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.inputContainerView.backgroundColor = .clear
         self.tableView.backgroundColor = .clear
         self.tableView.register(UINib(nibName: "LostArticleType1TableViewCell", bundle: nil), forCellReuseIdentifier: "LostArticleType1TableViewCell")
-        self.tableView.separatorStyle = .none
+        self.tableView.tableView.separatorStyle = .none // 이거 왜 안되지.. 봐야함
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -121,63 +140,56 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     //MARK: action
 }
 
-extension LostArticleListViewController: UITableViewDelegate, UITableViewDataSource {
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 0
-//    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView:/*class name*/ = tableView.dequeueReusableHeaderFooterView(withIdentifier: /*class id name*/) as! /*class name*/
-//
-//        switch section {
-//        case 0:
-//            break
-//        default:
-//            break
-//        }
-//        return headerView
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 36
-//    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDelegate {
+    func hwTableView(_ hwTableView: HWTableView, numberOfRowsInSection section: Int) -> Int {
         var numOfRows = 0
-        
-        self.viewModel.state.subscribe(onNext : { [weak self] in
-            print("test1:\($0.lostArticleData.count)")
-            numOfRows = $0.lostArticleData.count
-        }).disposed(by: self.disposeBag)
-        
+        numOfRows = self.viewModel.currentState.lostArticleData.count
+        print("self.viewModel.currentState.lostArticleData.count:\(self.viewModel.currentState.lostArticleData.count)")
         return numOfRows
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func hwTableView(_ hwTableView: HWTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LostArticleType1TableViewCell", for: indexPath) as! LostArticleType1TableViewCell
-        self.viewModel.state.subscribe(onNext: {
-            if $0.lostArticleData.count-1 >= indexPath.row {
-                cell.infoData = $0.lostArticleData[indexPath.row]
-            }
-        }).disposed(by: self.disposeBag)
+        cell.infoData = self.viewModel.currentState.lostArticleData[indexPath.row]
         cell.selectionStyle = .none
         return cell
     }
     
+    func hwTableViewSekeletonViewCellIdentifier(_ hwTableView: HWTableView) -> String {
+        return "LostArticleType1TableViewCell"
+    }
+    
+    func hwTableViewSekeletonViewCount(_ hwTableView: HWTableView) -> Int {
+        return 4
+    }
+    
+    
+    private func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        var numOfRows = 0
+//        numOfRows = self.viewModel.currentState.lostArticleData.count
+//        print("self.viewModel.currentState.lostArticleData.count:\(self.viewModel.currentState.lostArticleData.count)")
+//        return numOfRows
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "LostArticleType1TableViewCell", for: indexPath) as! LostArticleType1TableViewCell
+//        cell.infoData = self.viewModel.currentState.lostArticleData[indexPath.row]
+//        cell.selectionStyle = .none
+//        return cell
+//    }
+//
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {// 이런거 구현해야함
         self.view.endEditing(true)
     }
-    
 }
 
 extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSource,ToolbarPickerViewDelegate {

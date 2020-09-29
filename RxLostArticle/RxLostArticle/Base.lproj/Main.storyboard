@@ -124,20 +124,20 @@
                                             <constraint firstAttribute="height" constant="65" id="trI-uQ-qbs"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zHV-vf-lfI">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zf2-TN-Yt3" customClass="HWTableView" customModule="RxLostArticle" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="65" width="414" height="660"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </tableView>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="zHV-vf-lfI" firstAttribute="top" secondItem="ie3-SN-EwD" secondAttribute="bottom" id="6bL-8U-Hnz"/>
+                                    <constraint firstItem="zf2-TN-Yt3" firstAttribute="top" secondItem="ie3-SN-EwD" secondAttribute="bottom" id="2jA-u1-Mfx"/>
+                                    <constraint firstAttribute="bottom" secondItem="zf2-TN-Yt3" secondAttribute="bottom" id="FRz-1I-gwu"/>
                                     <constraint firstItem="ie3-SN-EwD" firstAttribute="top" secondItem="dqF-yk-vn9" secondAttribute="top" id="NU3-we-Cw7"/>
+                                    <constraint firstItem="zf2-TN-Yt3" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="WbB-u3-jE8"/>
                                     <constraint firstItem="ie3-SN-EwD" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="bIZ-Yr-maK"/>
-                                    <constraint firstItem="zHV-vf-lfI" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="tbX-Tr-6HG"/>
-                                    <constraint firstAttribute="trailing" secondItem="zHV-vf-lfI" secondAttribute="trailing" id="uTZ-S0-TWV"/>
+                                    <constraint firstAttribute="trailing" secondItem="zf2-TN-Yt3" secondAttribute="trailing" id="ipn-Ot-SMc"/>
                                     <constraint firstAttribute="trailing" secondItem="ie3-SN-EwD" secondAttribute="trailing" id="v0p-NA-Vzu"/>
-                                    <constraint firstAttribute="bottom" secondItem="zHV-vf-lfI" secondAttribute="bottom" id="zDt-2I-JIv"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -165,7 +165,7 @@
                         <outlet property="backgroundView" destination="hbt-r5-xeA" id="Al9-84-I9f"/>
                         <outlet property="inputContainerView" destination="ie3-SN-EwD" id="df4-wH-zXl"/>
                         <outlet property="mainContainerView" destination="dqF-yk-vn9" id="kps-Ie-EfZ"/>
-                        <outlet property="tableView" destination="zHV-vf-lfI" id="CCl-lS-Swb"/>
+                        <outlet property="tableView" destination="zf2-TN-Yt3" id="eop-nS-Kaj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="79V-Hf-fT4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
