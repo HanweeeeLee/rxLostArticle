@@ -43,7 +43,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.reactor = self.viewModel
         initUI()
         
-        print("test:\(APIDefine.getLostArticleAPIAddress(startIndex: 0, endIndex: 10, type: .bag, place: .bus, searchTxt: nil))")
+//        print("test:\(APIDefine.getLostArticleAPIAddress(startIndex: 0, endIndex: 10, type: .bag, place: .bus, searchTxt: nil))")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -174,29 +174,21 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
         return 4
     }
     
-    
-    private func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func hwTableView(_ hwtableView: HWTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        var numOfRows = 0
-//        numOfRows = self.viewModel.currentState.lostArticleData.count
-//        print("self.viewModel.currentState.lostArticleData.count:\(self.viewModel.currentState.lostArticleData.count)")
-//        return numOfRows
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "LostArticleType1TableViewCell", for: indexPath) as! LostArticleType1TableViewCell
-//        cell.infoData = self.viewModel.currentState.lostArticleData[indexPath.row]
-//        cell.selectionStyle = .none
-//        return cell
-//    }
-//
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//
-//    }
+    func hwTableView(_ hwTableVIew: HWTableView, didSelectRowAt indexPath: IndexPath) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = mainStoryboard.instantiateViewController(withIdentifier: "DetailArticleViewController") as? DetailArticleViewController {
+//            print("send to :\(self.viewModel.currentState.lostArticleData[indexPath.row])")
+//            vc.setInfoData(self.viewModel.currentState.lostArticleData[indexPath.row])
+            let detailArticleViewModel:DetailArticleViewModel = DetailArticleViewModel()
+            detailArticleViewModel.action.onNext(.setInfoData(data: self.viewModel.currentState.lostArticleData[indexPath.row]))
+            vc.viewModel = detailArticleViewModel
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {// 이런거 구현해야함
         self.view.endEditing(true)

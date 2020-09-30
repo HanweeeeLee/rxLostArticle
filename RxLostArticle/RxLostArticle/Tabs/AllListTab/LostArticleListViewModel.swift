@@ -35,7 +35,6 @@ class LostArticleListViewModel: Reactor {
         case changeLostPlace(LostPlaceType)
         case setError(Error?)
         case setServerErrorNil
-        //        case appendMoreData
     }
     
     struct State {
@@ -57,7 +56,6 @@ class LostArticleListViewModel: Reactor {
                     switch result {
                     case let .success(json):
                         return Mutation.updateArticleList(json)
-//                        return Mutation.updateArticleList(JSON.null, .bus, .backpack, 1)
                     case let .failure(err):
                         return Mutation.setError(err)
                     }

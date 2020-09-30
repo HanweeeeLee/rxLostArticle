@@ -28,6 +28,8 @@
 		4FBCAF3E251D6FA2002234F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBCAF3C251D6FA2002234F6 /* LaunchScreen.storyboard */; };
 		782E85E925238BA1007E1541 /* NoResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782E85E825238BA1007E1541 /* NoResultView.swift */; };
 		782E85EC25238BAC007E1541 /* NoResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782E85EB25238BAC007E1541 /* NoResultView.xib */; };
+		7872F1A42524700700EF4253 /* DetailArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7872F1A22524700700EF4253 /* DetailArticleViewController.swift */; };
+		7872F1A9252486D000EF4253 /* DetailArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7872F1A8252486D000EF4253 /* DetailArticleViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		4FBCAF3F251D6FA2002234F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		782E85E825238BA1007E1541 /* NoResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultView.swift; sourceTree = "<group>"; };
 		782E85EB25238BAC007E1541 /* NoResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultView.xib; sourceTree = "<group>"; };
+		7872F1A22524700700EF4253 /* DetailArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArticleViewController.swift; sourceTree = "<group>"; };
+		7872F1A8252486D000EF4253 /* DetailArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailArticleViewModel.swift; sourceTree = "<group>"; };
 		81F70B16D291C8A8ABFC930C /* Pods-RxLostArticle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxLostArticle.release.xcconfig"; path = "Target Support Files/Pods-RxLostArticle/Pods-RxLostArticle.release.xcconfig"; sourceTree = "<group>"; };
 		9F66D55AF57DCD045EAC0AB4 /* Pods_RxLostArticle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxLostArticle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -164,6 +168,8 @@
 		4F109FF5251D722D00F053A7 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				7872F1A22524700700EF4253 /* DetailArticleViewController.swift */,
+				7872F1A8252486D000EF4253 /* DetailArticleViewModel.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -367,12 +373,14 @@
 				4F10A000251D737F00F053A7 /* DataApiManager.swift in Sources */,
 				782E85E925238BA1007E1541 /* NoResultView.swift in Sources */,
 				4F10A02F251DC7CD00F053A7 /* ToobarPickerView.swift in Sources */,
+				7872F1A42524700700EF4253 /* DetailArticleViewController.swift in Sources */,
 				4FBCAF32251D6F9E002234F6 /* AppDelegate.swift in Sources */,
 				4F10A02C251D811000F053A7 /* LostArticleModel.swift in Sources */,
 				4FBCAF34251D6F9E002234F6 /* SceneDelegate.swift in Sources */,
 				4F10A013251D752500F053A7 /* CommonPushedViewController.swift in Sources */,
 				4F10A01F251D7B4800F053A7 /* CommonDefine.swift in Sources */,
 				4F10A018251D79A200F053A7 /* LostArticleListViewController.swift in Sources */,
+				7872F1A9252486D000EF4253 /* DetailArticleViewModel.swift in Sources */,
 				4F10A022251D7C0300F053A7 /* UIColorExtension.swift in Sources */,
 				4F109FF9251D731800F053A7 /* APIDefine.swift in Sources */,
 				4F10A01C251D79D100F053A7 /* LostArticleListViewModel.swift in Sources */,
