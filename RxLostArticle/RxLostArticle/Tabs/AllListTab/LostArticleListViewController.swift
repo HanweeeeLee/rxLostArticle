@@ -47,7 +47,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        self.reactor?.action.onNext(.updateArticleList(place: reactor!.currentState.selectedPlace, type: reactor!.currentState.selectedType))
+        self.reactor?.action.onNext(.updateArticleList)
     }
     
     func bind(reactor: LostArticleListViewModel) {
@@ -63,14 +63,12 @@ class LostArticleListViewController: UIViewController,StoryboardView {
                 else {
                     print("loading end")
                     self?.tableView.hideSkeletonHW()
-//                    self?.tableView.reloadData()
                 }
             }).disposed(by: self.disposeBag)
         
         reactor.state.map{ $0.lostArticleData }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] data in
-//                print("articleData:\(data)")
                 self?.tableView.reloadData()
             }).disposed(by: self.disposeBag)
         
@@ -84,6 +82,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         }.distinctUntilChanged()
         .subscribe(onNext: { [weak self] value in
             self?.articleTypeTextField.text = self?.viewModel.currentState.selectedType.rawValue
+//            self?.reactor?.action.onNext(.updateArticleList)
         }).disposed(by: self.disposeBag)
         
         reactor.state.map{
@@ -98,7 +97,6 @@ class LostArticleListViewController: UIViewController,StoryboardView {
             $0.serverErr
         }
         .compactMap{ $0 }
-        .distinctUntilChanged()// 나중에 nil로 set하면서 제거해야함
         .subscribe(onNext: { [weak self] value in
             print("server error value:\(value)")
             self?.tableView.showNoResultView()
@@ -196,9 +194,9 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
 //    }
 //
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//    }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {// 이런거 구현해야함
         self.view.endEditing(true)
@@ -236,12 +234,13 @@ extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSou
     func didTapDone(fromPickerView: ToolbarPickerView) {
         if fromPickerView === self.placePickerView {
             let place = self.allPlaceNameArr[fromPickerView.selectedRow(inComponent: 0)]
-            self.reactor?.action.onNext(.updateArticleList(place:LostPlaceType.getEnumFromKoreanType(korean: place), type: self.viewModel.currentState.selectedType))
+            self.reactor?.action.onNext(.changeLostPlace(place: LostPlaceType.getEnumFromKoreanType(korean: place)))
+            self.reactor?.action.onNext(.updateArticleList)
         }
         else if fromPickerView === self.typePickerView {
             let type = self.allArticleTypeNameArr[fromPickerView.selectedRow(inComponent: 0)]
-            
-            self.reactor?.action.onNext(.updateArticleList(place:self.viewModel.currentState.selectedPlace, type: LostArticleType.getEnumFromKoreanType(korean: type)))
+            self.reactor?.action.onNext(.changeLostArticleType(type: LostArticleType.getEnumFromKoreanType(korean: type)))
+            self.reactor?.action.onNext(.updateArticleList)
         }
         else {
             

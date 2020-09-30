@@ -184,7 +184,6 @@ extension HWTableView:UITableViewDelegate {
         self.delegate?.hwTableView?(self, didSelectRowAt: indexPath)
     }
     
-    //여기서부터 구현
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll?(scrollView)
     }
