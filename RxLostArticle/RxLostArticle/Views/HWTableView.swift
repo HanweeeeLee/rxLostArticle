@@ -48,8 +48,6 @@ class HWTableView: UIView {
     public weak var dataSource:HWTableViewDatasource?
     
     public lazy var tableView:UITableView = UITableView(frame: self.bounds)
-    private var isShowDisplayAnimation:Bool = false
-    public var reloadFlag:Bool = false
     public lazy var separatorStype:UITableViewCell.SeparatorStyle = self.tableView.separatorStyle {
         didSet {
             self.tableView.separatorStyle = self.separatorStype
@@ -57,6 +55,8 @@ class HWTableView: UIView {
     }
     
     //MARK: private property
+    private var isShowDisplayAnimation:Bool = false
+    private var reloadFlag:Bool = false
     private let defaultCellHeight:CGFloat = 100
     private var numberOfRows:UInt = 0
     private var noResultView:UIView?
@@ -115,7 +115,7 @@ class HWTableView: UIView {
         self.noResultView = view
         guard let subView = self.noResultView else { return }
         self.addSubview(subView)
-//        subView.superview?.bringSubviewToFront(subView)
+        subView.superview?.bringSubviewToFront(subView)
         subView.snp.makeConstraints{ (make) in
             make.leading.equalTo(self.snp.leading).offset(0)
             make.trailing.equalTo(self.snp.trailing).offset(0)
@@ -166,7 +166,6 @@ class HWTableView: UIView {
 extension HWTableView:UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //        print("willDisplay")
-        print("test!!!:\(self.isShowDisplayAnimation)")
         if self.isShowDisplayAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: 100 * 1.0)
             cell.alpha = 0
