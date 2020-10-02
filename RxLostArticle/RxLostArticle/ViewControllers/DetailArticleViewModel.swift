@@ -69,6 +69,8 @@ class DetailArticleViewModel: Reactor {
             newState.error = err
         case .setImgUrl(let json):
             print("imgUrl response:\(json)")
+            print("test:\(json["SearchLostArticleImageService"]["row"][0]["ID"].stringValue)")
+            newState.imgUrl = json["SearchLostArticleImageService"]["row"][0]["IMAGE_URL"].stringValue
         }
         return newState
     }
