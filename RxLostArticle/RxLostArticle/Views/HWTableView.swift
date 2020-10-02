@@ -24,6 +24,7 @@ import SnapKit
     @objc optional func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool
     @objc optional func scrollViewDidScrollToTop(_ scrollView: UIScrollView)
     
+    @objc optional func callNextPage(_ scrollView:UIScrollView)
 }
 
 @objc protocol HWTableViewDatasource:class {
@@ -53,6 +54,8 @@ class HWTableView: UIView {
             self.tableView.separatorStyle = self.separatorStype
         }
     }
+    
+    public var callNextPageBeforeOffset:CGFloat = 150
     
     //MARK: private property
     private var isShowDisplayAnimation:Bool = false
@@ -100,9 +103,7 @@ class HWTableView: UIView {
     }
 
     public func hideSkeletonHW() {
-        print("true set")
         DispatchQueue.main.async { [weak self] in
-            print("when")
             self?.isShowDisplayAnimation = true
             self?.stopSkeletonAnimation()
             self?.hideSkeleton()
@@ -197,6 +198,16 @@ extension HWTableView:UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate?.scrollViewDidScroll?(scrollView)
+        
+        let offset = scrollView.contentOffset;
+        let bounds = scrollView.bounds;
+        let size = scrollView.contentSize;
+        let inset = scrollView.contentInset;
+        let y = offset.y + bounds.size.height - inset.bottom;
+        let h = size.height;
+        if y + self.callNextPageBeforeOffset >= h {
+            self.delegate?.callNextPage?(scrollView)
+        }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

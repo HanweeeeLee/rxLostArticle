@@ -187,9 +187,16 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
         }
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {// 이런거 구현해야함
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(true)
     }
+    
+    func callNextPage(_ scrollView: UIScrollView) {
+        if !(self.reactor?.currentState.isQuerying ?? true) {
+            self.reactor?.action.onNext(.callNextPage)
+        }
+    }
+    
 }
 
 extension LostArticleListViewController:UIPickerViewDelegate,UIPickerViewDataSource,ToolbarPickerViewDelegate {
