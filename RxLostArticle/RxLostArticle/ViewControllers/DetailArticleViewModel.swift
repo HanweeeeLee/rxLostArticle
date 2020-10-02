@@ -26,12 +26,12 @@ class DetailArticleViewModel: Reactor {
     enum Mutation {
         case setInfoData(LostArticleModel)
         case setError(Error?)
-        case setImgUrl(JSON)
+        case setImgUrl(JSON?)
     }
     
     struct State {
         var infoData:LostArticleModel = LostArticleModel()
-        var imgUrl:String = ""
+        var imgUrl:String? = nil
         var error:Error? = nil
     }
     
@@ -51,7 +51,8 @@ class DetailArticleViewModel: Reactor {
                     case let .failure(err):
                         return Mutation.setError(err)
                     }
-                }
+                },
+                Observable.just(Mutation.setImgUrl(nil))
 //                },
 //                Observable.just(Mutation.setError(nil)),
 //                Observable.just(Mutation.setServerErrorNil)
@@ -69,8 +70,13 @@ class DetailArticleViewModel: Reactor {
             newState.error = err
         case .setImgUrl(let json):
             print("imgUrl response:\(json)")
-            print("test:\(json["SearchLostArticleImageService"]["row"][0]["ID"].stringValue)")
-            newState.imgUrl = json["SearchLostArticleImageService"]["row"][0]["IMAGE_URL"].stringValue
+            if json != nil {
+                print("test:\(json!["SearchLostArticleImageService"]["row"][0]["ID"].stringValue)")
+                newState.imgUrl = json!["SearchLostArticleImageService"]["row"][0]["IMAGE_URL"].stringValue
+            }
+            else {
+                newState.imgUrl = nil
+            }
         }
         return newState
     }

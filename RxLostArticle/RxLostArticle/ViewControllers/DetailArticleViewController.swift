@@ -45,11 +45,13 @@ class DetailArticleViewController: CommonPushedViewController,StoryboardView {
             self?.getDateLabel.text = data.getDate
             self?.getPositionLabel.text = data.getPosition
             self?.reactor?.action.onNext(.getImgUrl(id: String(format: "%d", data.id)))
-        })
+        }).disposed(by: self.disposeBag)
         
         reactor.state.map {
             $0.imgUrl
-        }.distinctUntilChanged()
+        }
+        .compactMap{ $0 }
+        .distinctUntilChanged()
         .subscribe(onNext: { [weak self] urlStr in
             print("url:\(urlStr)")
 //            https://nr-platform.s3.amazonaws.com/uploads/platform/published_extension/branding_icon/275/AmazonS3.png //testImgUrl
