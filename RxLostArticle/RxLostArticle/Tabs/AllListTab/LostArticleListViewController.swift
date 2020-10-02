@@ -42,23 +42,20 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         super.viewDidLoad()
         self.reactor = self.viewModel
         initUI()
-        
-//        print("test:\(APIDefine.getLostArticleAPIAddress(startIndex: 0, endIndex: 10, type: .bag, place: .bus, searchTxt: nil))")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.reactor?.action.onNext(.updateArticleList)
     }
     
     func bind(reactor: LostArticleListViewModel) {
+        
+        self.reactor?.action.onNext(.updateArticleList)
         
         reactor.state.map { $0.isLoading }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] isLoading in
                 if isLoading {
                     print("loading start")
-                    self?.tableView.hideNoResultView()
-                    self?.tableView.showSkeletonHW()
+                    self?.tableView.hideNoResultView(completion: {[weak self] in
+                        self?.tableView.showSkeletonHW()
+                    })
                 }
                 else {
                     print("loading end")
@@ -99,7 +96,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         .compactMap{ $0 }
         .subscribe(onNext: { [weak self] value in
             print("server error value:\(value)")
-            self?.tableView.showNoResultView()
+            self?.tableView.showNoResultView(completion: nil)
         }).disposed(by: self.disposeBag)
         
     }
@@ -117,7 +114,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.addNoResultView((NoResultView.loadFromNibNamed(nibNamed: "NoResultView") as! NoResultView))
-        self.tableView.hideNoResultView()
+        self.tableView.hideNoResultView(completion: nil)
         
         self.articleTypeTitleLabel.textColor = .black
         self.articleTypeTitleLabel.text = "타입"

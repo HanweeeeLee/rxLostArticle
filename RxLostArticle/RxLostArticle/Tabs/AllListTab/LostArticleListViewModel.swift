@@ -121,6 +121,7 @@ class LostArticleListViewModel: Reactor {
     
     func getLostArticleList(page:Int,type:LostArticleType,place:LostPlaceType) -> Observable<Result<JSON,Error>> {
         let url:String = APIDefine.getLostArticleAPIAddress(startIndex: page, endIndex: page + Int(self.queryOnceCnt), type: type, place: place, searchTxt: nil)
+        print("type:\(type) place:\(place)")
         return DataApiManager.requestGETURLRx(url, headers: nil)
             .observeOn(MainScheduler.instance)
             .retry(3)

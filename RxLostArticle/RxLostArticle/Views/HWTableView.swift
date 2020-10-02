@@ -48,7 +48,7 @@ class HWTableView: UIView {
     public weak var dataSource:HWTableViewDatasource?
     
     public lazy var tableView:UITableView = UITableView(frame: self.bounds)
-    public var isShowDisplayAnimation:Bool = false
+    private var isShowDisplayAnimation:Bool = false
     public var reloadFlag:Bool = false
     public lazy var separatorStype:UITableViewCell.SeparatorStyle = self.tableView.separatorStyle {
         didSet {
@@ -90,26 +90,32 @@ class HWTableView: UIView {
     
     //MARK: public func
     public func showSkeletonHW() {
-        self.isShowDisplayAnimation = false
-        self.tableView.isSkeletonable = true
-        self.showAnimatedGradientSkeleton()
-        self.startSkeletonAnimation()
+        DispatchQueue.main.async { [weak self] in
+            self?.isShowDisplayAnimation = false
+            self?.tableView.isSkeletonable = true
+            self?.showAnimatedGradientSkeleton()
+            self?.startSkeletonAnimation()
+        }
+        
     }
 
     public func hideSkeletonHW() {
         print("true set")
-        self.isShowDisplayAnimation = true
-        self.stopSkeletonAnimation()
-        self.hideSkeleton()
-        self.tableView.reloadData() //리로드를 안해주면 데이터가 이상하게 set된다 ㅡㅡ; skeletonview 버그인듯
-        self.reloadFlag = true
+        DispatchQueue.main.async { [weak self] in
+            print("when")
+            self?.isShowDisplayAnimation = true
+            self?.stopSkeletonAnimation()
+            self?.hideSkeleton()
+            self?.tableView.reloadData() //리로드를 안해주면 데이터가 이상하게 set된다 ㅡㅡ; skeletonview 버그인듯
+            self?.reloadFlag = true
+        }
     }
     
     public func addNoResultView(_ view:UIView) {
         self.noResultView = view
         guard let subView = self.noResultView else { return }
         self.addSubview(subView)
-        subView.superview?.bringSubviewToFront(subView)
+//        subView.superview?.bringSubviewToFront(subView)
         subView.snp.makeConstraints{ (make) in
             make.leading.equalTo(self.snp.leading).offset(0)
             make.trailing.equalTo(self.snp.trailing).offset(0)
@@ -123,15 +129,20 @@ class HWTableView: UIView {
         self.noResultView = nil
     }
     
-    public func showNoResultView() {
-        DispatchQueue.main.async {
-            self.noResultView?.isHidden = false
+    public func showNoResultView(completion:(() -> ())?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.noResultView?.isHidden = false
+            self?.isShowDisplayAnimation = true
+            completion?()
         }
     }
     
-    public func hideNoResultView() {
-        DispatchQueue.main.async {
-            self.noResultView?.isHidden = true
+    public func hideNoResultView(completion:(() -> ())?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.noResultView?.isHidden = true
+            self?.isShowDisplayAnimation = true
+            self?.reloadFlag = false
+            completion?()
         }
         
     }
@@ -155,6 +166,7 @@ class HWTableView: UIView {
 extension HWTableView:UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //        print("willDisplay")
+        print("test!!!:\(self.isShowDisplayAnimation)")
         if self.isShowDisplayAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: 100 * 1.0)
             cell.alpha = 0
