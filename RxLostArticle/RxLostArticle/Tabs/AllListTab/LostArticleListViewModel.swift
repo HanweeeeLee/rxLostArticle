@@ -198,7 +198,6 @@ class LostArticleListViewModel: Reactor {
             .observeOn(MainScheduler.instance)
             .retry(3)
             .map{
-                usleep(1 * 1000 * 1000)
                 return .success($0)
             }
             .catchError{
