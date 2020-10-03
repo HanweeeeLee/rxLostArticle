@@ -31,7 +31,8 @@ import SnapKit
     func hwTableView(_ hwTableView: HWTableView, numberOfRowsInSection section: Int) -> Int
     func hwTableView(_ hwTableView: HWTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     func hwTableViewSekeletonViewCellIdentifier(_ hwTableView: HWTableView) -> String
-    func hwTableViewSekeletonViewCount(_ hwTableView: HWTableView) -> Int
+    func hwTableViewSekeletonViewHeight(_ hwTableView: HWTableView) -> CGFloat
+    @objc optional func hwTableViewSekeletonViewCount(_ hwTableView: HWTableView) -> Int
     @objc optional func hwTableView(_ hwtableView: HWTableView, heightForRowAt indexPath:IndexPath) -> CGFloat
     @objc optional func numberOfSections(in hwtableView: HWTableView) -> Int
     @objc optional func hwTableView(_ hwtableView: HWTableView, viewForHeaderInSection section: Int) -> UIView?
@@ -89,6 +90,15 @@ class HWTableView: UIView {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.isSkeletonable = true
+    }
+    
+    private func getSkeletonCellBestCount(cellHeight:CGFloat) -> Int {
+        var result:Int = 0
+        result = Int(self.bounds.height/cellHeight)
+        if self.bounds.height.truncatingRemainder(dividingBy: cellHeight) != 0 {
+            result += 1
+        }
+        return result
     }
     
     //MARK: public func
@@ -250,7 +260,8 @@ extension HWTableView:SkeletonTableViewDataSource {
     }
 
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource?.hwTableViewSekeletonViewCount(self) ?? 0
+        let cellHight:CGFloat = self.dataSource?.hwTableViewSekeletonViewHeight(self) ?? 0
+        return self.getSkeletonCellBestCount(cellHeight: cellHight)
     }
 }
 

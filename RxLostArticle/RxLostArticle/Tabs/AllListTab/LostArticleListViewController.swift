@@ -149,6 +149,10 @@ class LostArticleListViewController: UIViewController,StoryboardView {
 }
 
 extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDelegate {
+    func hwTableViewSekeletonViewHeight(_ hwTableView: HWTableView) -> CGFloat {
+        return 100
+    }
+    
     func hwTableView(_ hwTableView: HWTableView, numberOfRowsInSection section: Int) -> Int {
         var numOfRows = 0
         numOfRows = self.viewModel.currentState.lostArticleData.count
@@ -165,10 +169,6 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
     
     func hwTableViewSekeletonViewCellIdentifier(_ hwTableView: HWTableView) -> String {
         return "LostArticleType1TableViewCell"
-    }
-    
-    func hwTableViewSekeletonViewCount(_ hwTableView: HWTableView) -> Int {
-        return 4
     }
     
     func hwTableView(_ hwtableView: HWTableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -192,7 +192,7 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
     }
     
     func callNextPage(_ scrollView: UIScrollView) {
-        if !(self.reactor?.currentState.isQuerying ?? true) {
+        if (!(self.reactor?.currentState.isQuerying ?? true) && !(self.reactor?.currentState.reachEnd ?? true)) {
             self.reactor?.action.onNext(.callNextPage)
         }
     }
