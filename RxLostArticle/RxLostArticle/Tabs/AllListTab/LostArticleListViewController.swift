@@ -109,7 +109,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.inputContainerView.backgroundColor = .clear
         self.tableView.backgroundColor = .clear
         self.tableView.register(UINib(nibName: "LostArticleType1TableViewCell", bundle: nil), forCellReuseIdentifier: "LostArticleType1TableViewCell")
-        self.tableView.tableView.separatorStyle = .none // 이거 왜 안되지.. 봐야함
+        self.tableView.separatorStype = .none
         
         self.tableView.delegate = self
         self.tableView.dataSource = self

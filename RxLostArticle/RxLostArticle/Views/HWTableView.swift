@@ -261,7 +261,7 @@ extension HWTableView:SkeletonTableViewDataSource {
 
     func collectionSkeletonView(_ skeletonView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let cellHight:CGFloat = self.dataSource?.hwTableViewSekeletonViewHeight(self) ?? 0
-        return self.getSkeletonCellBestCount(cellHeight: cellHight)
+        return self.dataSource?.hwTableViewSekeletonViewCount?(self) ?? self.getSkeletonCellBestCount(cellHeight: cellHight)
     }
 }
 
