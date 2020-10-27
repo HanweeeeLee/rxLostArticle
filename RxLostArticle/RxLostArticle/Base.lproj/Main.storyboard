@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RZX-90-GJq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -128,15 +128,52 @@
                                         <rect key="frame" x="0.0" y="65" width="414" height="660"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pOT-he-93A" customClass="HWCollectionView" customModule="RxLostArticle" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="65" width="414" height="660"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxO-DT-6bW">
+                                        <rect key="frame" x="377" y="72" width="30" height="30"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transform" translatesAutoresizingMaskIntoConstraints="NO" id="MCh-2D-Q60">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tK2-9v-1Tq">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <connections>
+                                                    <action selector="transformBtnClick:" destination="dM2-Dg-s9C" eventType="touchUpInside" id="sFK-Uv-WM4"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="8tM-oc-Y1m"/>
+                                            <constraint firstAttribute="bottom" secondItem="MCh-2D-Q60" secondAttribute="bottom" id="CY5-gc-F8O"/>
+                                            <constraint firstAttribute="trailing" secondItem="tK2-9v-1Tq" secondAttribute="trailing" id="EOD-xX-sK4"/>
+                                            <constraint firstAttribute="bottom" secondItem="tK2-9v-1Tq" secondAttribute="bottom" id="Ex4-db-IBn"/>
+                                            <constraint firstAttribute="trailing" secondItem="MCh-2D-Q60" secondAttribute="trailing" id="OkH-6i-rCr"/>
+                                            <constraint firstItem="MCh-2D-Q60" firstAttribute="leading" secondItem="zxO-DT-6bW" secondAttribute="leading" id="SVx-LZ-e2z"/>
+                                            <constraint firstItem="tK2-9v-1Tq" firstAttribute="top" secondItem="zxO-DT-6bW" secondAttribute="top" id="YBy-cW-3HF"/>
+                                            <constraint firstItem="MCh-2D-Q60" firstAttribute="top" secondItem="zxO-DT-6bW" secondAttribute="top" id="wah-2E-hOJ"/>
+                                            <constraint firstAttribute="width" constant="30" id="xKo-6u-L0Y"/>
+                                            <constraint firstItem="tK2-9v-1Tq" firstAttribute="leading" secondItem="zxO-DT-6bW" secondAttribute="leading" id="yqW-a2-BhK"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="zf2-TN-Yt3" firstAttribute="top" secondItem="ie3-SN-EwD" secondAttribute="bottom" id="2jA-u1-Mfx"/>
+                                    <constraint firstAttribute="bottom" secondItem="pOT-he-93A" secondAttribute="bottom" id="3go-3k-qqk"/>
+                                    <constraint firstAttribute="trailing" secondItem="zxO-DT-6bW" secondAttribute="trailing" constant="7" id="AJL-qh-LGO"/>
+                                    <constraint firstAttribute="trailing" secondItem="pOT-he-93A" secondAttribute="trailing" id="BYW-Dq-MnG"/>
                                     <constraint firstAttribute="bottom" secondItem="zf2-TN-Yt3" secondAttribute="bottom" id="FRz-1I-gwu"/>
                                     <constraint firstItem="ie3-SN-EwD" firstAttribute="top" secondItem="dqF-yk-vn9" secondAttribute="top" id="NU3-we-Cw7"/>
                                     <constraint firstItem="zf2-TN-Yt3" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="WbB-u3-jE8"/>
                                     <constraint firstItem="ie3-SN-EwD" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="bIZ-Yr-maK"/>
+                                    <constraint firstItem="pOT-he-93A" firstAttribute="leading" secondItem="dqF-yk-vn9" secondAttribute="leading" id="f8K-Fv-d8c"/>
                                     <constraint firstAttribute="trailing" secondItem="zf2-TN-Yt3" secondAttribute="trailing" id="ipn-Ot-SMc"/>
+                                    <constraint firstItem="pOT-he-93A" firstAttribute="top" secondItem="ie3-SN-EwD" secondAttribute="bottom" id="jYg-PO-Dte"/>
+                                    <constraint firstItem="zxO-DT-6bW" firstAttribute="top" secondItem="ie3-SN-EwD" secondAttribute="bottom" constant="7" id="sMT-Js-ymB"/>
                                     <constraint firstAttribute="trailing" secondItem="ie3-SN-EwD" secondAttribute="trailing" id="v0p-NA-Vzu"/>
                                 </constraints>
                             </view>
@@ -163,9 +200,11 @@
                         <outlet property="articleTypeTextFieldContainerView" destination="lsz-5G-smh" id="k9Q-P6-wAQ"/>
                         <outlet property="articleTypeTitleLabel" destination="5Hm-hb-k0A" id="SBi-bB-9oH"/>
                         <outlet property="backgroundView" destination="hbt-r5-xeA" id="Al9-84-I9f"/>
+                        <outlet property="collectionView" destination="pOT-he-93A" id="3Hd-0G-7Gb"/>
                         <outlet property="inputContainerView" destination="ie3-SN-EwD" id="df4-wH-zXl"/>
                         <outlet property="mainContainerView" destination="dqF-yk-vn9" id="kps-Ie-EfZ"/>
                         <outlet property="tableView" destination="zf2-TN-Yt3" id="eop-nS-Kaj"/>
+                        <outlet property="transformBtnView" destination="zxO-DT-6bW" id="9bw-gm-6dS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="79V-Hf-fT4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -305,6 +344,7 @@
     </scenes>
     <resources>
         <image name="ImagePlaceHolder" width="240" height="240"/>
+        <image name="transform" width="240" height="240"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

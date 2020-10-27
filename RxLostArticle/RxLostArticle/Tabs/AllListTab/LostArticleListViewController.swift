@@ -13,6 +13,12 @@ import SkeletonView
 
 class LostArticleListViewController: UIViewController,StoryboardView {
     //MARK: outlet
+    
+    enum ViewType {
+        case tableView
+        case collectionView
+    }
+    
     @IBOutlet weak var backgroundView: UIView!
     
     @IBOutlet weak var mainContainerView: UIView!
@@ -24,6 +30,8 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     @IBOutlet weak var articlePlaceTextFieldContainerView: UIView!
     @IBOutlet weak var articlePlaceTextField: UITextField!
     @IBOutlet weak var tableView: HWTableView!
+    @IBOutlet weak var collectionView: HWCollectionView!
+    @IBOutlet weak var transformBtnView: UIView!
     
     
     //MARK: property
@@ -35,6 +43,27 @@ class LostArticleListViewController: UIViewController,StoryboardView {
     
     var allArticleTypeNameArr:Array<LostArticleType.koreanLostArticleType> = LostArticleType.allEnumKoreanArray()
     var allPlaceNameArr:Array<LostPlaceType.koreanLostPlaceType> = LostPlaceType.allEnumKoreanArray()
+    
+    var currentShowViewType:ViewType = .collectionView {
+        didSet {
+            switch self.currentShowViewType {
+            case .tableView:
+                //todo animation
+                self.tableView.isHidden = false
+                self.collectionView.isHidden = true
+                break
+            case .collectionView:
+                //todo animation
+                self.tableView.isHidden = true
+                self.collectionView.isHidden = false
+                break
+            }
+        }
+    }
+    
+    var collectionViewMargin:CGFloat = 10
+    var collectionViewCellLeftRightMargin:CGFloat = 5
+    var collectionViewCellTopBottomMargin:CGFloat = 5
     
     //MARK: lifeCycle
     
@@ -54,11 +83,13 @@ class LostArticleListViewController: UIViewController,StoryboardView {
                 if isLoading {
                     print("loading start")
                     self?.tableView.hideNoResultView(completion: {[weak self] in
+                        self?.collectionView.showSkeletonHW()
                         self?.tableView.showSkeletonHW()
                     })
                 }
                 else {
                     print("loading end")
+                    self?.collectionView.hideSkeletonHW()
                     self?.tableView.hideSkeletonHW()
                 }
             }).disposed(by: self.disposeBag)
@@ -67,6 +98,7 @@ class LostArticleListViewController: UIViewController,StoryboardView {
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] data in
                 self?.tableView.reloadData()
+                self?.collectionView.reloadData()
             }).disposed(by: self.disposeBag)
         
         reactor.state.map{ $0.selectedPlace
@@ -143,9 +175,32 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         self.placePickerView.delegate = self
         self.placePickerView.dataSource = self
         self.placePickerView.toolbarDelegate = self
+        
+        self.transformBtnView.layer.cornerRadius = 15
+        self.transformBtnView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
+        
+        self.tableView.isHidden = true
+        self.collectionView.backgroundColor = CommonDefine.themeColor1
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.collectionView.register(UINib(nibName: "LostArticleType1CollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "LostArticleType1CollectionViewCell")
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = self.collectionViewCellTopBottomMargin
+        layout.minimumInteritemSpacing = self.collectionViewCellLeftRightMargin
+        self.collectionView.collectionViewLayout = layout
+//        self.collectionView.isHidden = true
     }
     
     //MARK: action
+    @IBAction func transformBtnClick(_ sender: Any) {
+        if self.currentShowViewType == .collectionView {
+            self.currentShowViewType = .tableView
+        }
+        else {
+            currentShowViewType = .collectionView
+        }
+    }
 }
 
 extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDelegate {
@@ -195,6 +250,31 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
         if (!(self.reactor?.currentState.isQuerying ?? true) && !(self.reactor?.currentState.reachEnd ?? true)) {
             self.reactor?.action.onNext(.callNextPage)
         }
+    }
+    
+}
+
+extension LostArticleListViewController: HWCollectionViewDelegate, HWCollectionViewDatasource, HWCollectionViewDelegateFlowLayout {
+    func hwCollectionView(_ collectionView: HWCollectionView, numberOfItemsInSection section: Int) -> Int {
+        var numOfRows = 0
+        numOfRows = self.viewModel.currentState.lostArticleData.count
+        return numOfRows
+    }
+    
+    func hwCollectionView(_ collectionView: HWCollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell:LostArticleType1CollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "LostArticleType1CollectionViewCell", for: indexPath) as! LostArticleType1CollectionViewCell
+        cell.infoData = self.viewModel.currentState.lostArticleData[indexPath.row]
+        return cell
+    }
+    
+    func hwCollectionView(_ collectionView: HWCollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth:CGFloat = (UIScreen.main.bounds.width - (self.collectionViewMargin * 2) - self.collectionViewCellLeftRightMargin)/2
+        let cellHeight:CGFloat = cellWidth
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func hwCollectionView(_ collectionView: HWCollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: self.collectionViewMargin, left: self.collectionViewMargin, bottom: self.collectionViewMargin, right: self.collectionViewMargin)
     }
     
 }

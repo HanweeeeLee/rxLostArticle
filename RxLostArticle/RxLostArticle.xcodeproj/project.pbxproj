@@ -21,6 +21,9 @@
 		4F10A02C251D811000F053A7 /* LostArticleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F10A02B251D811000F053A7 /* LostArticleModel.swift */; };
 		4F10A02F251DC7CD00F053A7 /* ToobarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F10A02E251DC7CD00F053A7 /* ToobarPickerView.swift */; };
 		4F7452C02522FAF6001BDF10 /* HWTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7452BF2522FAF6001BDF10 /* HWTableView.swift */; };
+		4FAB0E712547A9F7007C4E75 /* HWCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB0E702547A9F6007C4E75 /* HWCollectionView.swift */; };
+		4FAB0E752547AED0007C4E75 /* LostArticleType1CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB0E732547AED0007C4E75 /* LostArticleType1CollectionViewCell.swift */; };
+		4FAB0E762547AED0007C4E75 /* LostArticleType1CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FAB0E742547AED0007C4E75 /* LostArticleType1CollectionViewCell.xib */; };
 		4FBCAF32251D6F9E002234F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCAF31251D6F9E002234F6 /* AppDelegate.swift */; };
 		4FBCAF34251D6F9E002234F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBCAF33251D6F9E002234F6 /* SceneDelegate.swift */; };
 		4FBCAF39251D6F9E002234F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FBCAF37251D6F9E002234F6 /* Main.storyboard */; };
@@ -47,6 +50,9 @@
 		4F10A02B251D811000F053A7 /* LostArticleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostArticleModel.swift; sourceTree = "<group>"; };
 		4F10A02E251DC7CD00F053A7 /* ToobarPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToobarPickerView.swift; sourceTree = "<group>"; };
 		4F7452BF2522FAF6001BDF10 /* HWTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWTableView.swift; sourceTree = "<group>"; };
+		4FAB0E702547A9F6007C4E75 /* HWCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HWCollectionView.swift; sourceTree = "<group>"; };
+		4FAB0E732547AED0007C4E75 /* LostArticleType1CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LostArticleType1CollectionViewCell.swift; sourceTree = "<group>"; };
+		4FAB0E742547AED0007C4E75 /* LostArticleType1CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LostArticleType1CollectionViewCell.xib; sourceTree = "<group>"; };
 		4FBCAF2E251D6F9E002234F6 /* RxLostArticle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxLostArticle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FBCAF31251D6F9E002234F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4FBCAF33251D6F9E002234F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +100,7 @@
 		4F109FEC251D722D00F053A7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FAB0E702547A9F6007C4E75 /* HWCollectionView.swift */,
 				4F7452BF2522FAF6001BDF10 /* HWTableView.swift */,
 				4F10A02E251DC7CD00F053A7 /* ToobarPickerView.swift */,
 				782E85E825238BA1007E1541 /* NoResultView.swift */,
@@ -203,6 +210,8 @@
 			children = (
 				4F10A025251D7F7400F053A7 /* LostArticleType1TableViewCell.swift */,
 				4F10A026251D7F7400F053A7 /* LostArticleType1TableViewCell.xib */,
+				4FAB0E732547AED0007C4E75 /* LostArticleType1CollectionViewCell.swift */,
+				4FAB0E742547AED0007C4E75 /* LostArticleType1CollectionViewCell.xib */,
 			);
 			path = CommonCells;
 			sourceTree = "<group>";
@@ -311,6 +320,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FBCAF3E251D6FA2002234F6 /* LaunchScreen.storyboard in Resources */,
+				4FAB0E762547AED0007C4E75 /* LostArticleType1CollectionViewCell.xib in Resources */,
 				782E85EC25238BAC007E1541 /* NoResultView.xib in Resources */,
 				4FBCAF3B251D6FA2002234F6 /* Assets.xcassets in Resources */,
 				4F10A028251D7F7400F053A7 /* LostArticleType1TableViewCell.xib in Resources */,
@@ -369,6 +379,7 @@
 			files = (
 				4F10A027251D7F7400F053A7 /* LostArticleType1TableViewCell.swift in Sources */,
 				4F109FFD251D737200F053A7 /* HWDataProtocol.swift in Sources */,
+				4FAB0E752547AED0007C4E75 /* LostArticleType1CollectionViewCell.swift in Sources */,
 				4F7452C02522FAF6001BDF10 /* HWTableView.swift in Sources */,
 				4F10A000251D737F00F053A7 /* DataApiManager.swift in Sources */,
 				782E85E925238BA1007E1541 /* NoResultView.swift in Sources */,
@@ -376,6 +387,7 @@
 				7872F1A42524700700EF4253 /* DetailArticleViewController.swift in Sources */,
 				4FBCAF32251D6F9E002234F6 /* AppDelegate.swift in Sources */,
 				4F10A02C251D811000F053A7 /* LostArticleModel.swift in Sources */,
+				4FAB0E712547A9F7007C4E75 /* HWCollectionView.swift in Sources */,
 				4FBCAF34251D6F9E002234F6 /* SceneDelegate.swift in Sources */,
 				4F10A013251D752500F053A7 /* CommonPushedViewController.swift in Sources */,
 				4F10A01F251D7B4800F053A7 /* CommonDefine.swift in Sources */,
