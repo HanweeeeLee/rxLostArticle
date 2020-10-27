@@ -28,6 +28,8 @@ import SnapKit
 
 @objc protocol HWCollectionViewDatasource: class {
 //    func hwTableView(_ hwTableView: HWTableView, numberOfRowsInSection section: Int) -> Int
+    func hwCollectionViewSekeletonViewCellIdentifier(_ hwCollectionView: HWCollectionView) -> String
+    
     func hwCollectionView(_ collectionView: HWCollectionView, numberOfItemsInSection section: Int) -> Int
     func hwCollectionView(_ collectionView: HWCollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 }
@@ -115,6 +117,8 @@ class HWCollectionView: UIView {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.isSkeletonable = true
+        self.collectionView.isSkeletonable = true
+        self.showAnimatedGradientSkeleton()
         self.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
     }
     
@@ -144,26 +148,20 @@ class HWCollectionView: UIView {
             self?.showAnimatedGradientSkeleton()
             self?.startSkeletonAnimation()
             self?.isShowingSkeletonView = true
-            print("ㅡㅡ?")
         }
-        
-//        self.isShowDisplayAnimation = false
-//        self.collectionView.isSkeletonable = true
-//        self.showAnimatedGradientSkeleton()
-//        self.startSkeletonAnimation()
-//        self.isShowingSkeletonView = true
         
     }
 
     public func hideSkeletonHW() {
         if self.isOverMinimumSkeletionTimer {
             DispatchQueue.main.async { [weak self] in
-                print("여기 안오는것 같은데")
                 self?.stopSkeletonAnimation()
                 self?.hideSkeleton()
-                self?.collectionView.reloadData() //리로드를 안해주면 데이터가 이상하게 set된다 ㅡㅡ; skeletonview 버그인듯
+//                self?.collectionView.reloadData() //리로드를 안해주면 데이터가 이상하게 set된다 ㅡㅡ; skeletonview 버그인듯 <- 테이블뷰의 경우, 콜렉션뷰는 일단 대기
                 self?.isShowingSkeletonView = false
                 self?.isShowDisplayAnimation = true
+                print("self?.isShowingSkeletonView\(String(describing: self?.isShowingSkeletonView)) self?.isShowDisplayAnimation\(String(describing: self?.isShowDisplayAnimation))")
+                self?.isShowDisplayAnimation = false
             }
         }
         else {
@@ -241,9 +239,16 @@ extension HWCollectionView: UICollectionViewDataSource {
     
 }
 
+extension HWCollectionView:SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return self.dataSource?.hwCollectionViewSekeletonViewCellIdentifier(self) ?? ""
+    }
+}
+
 extension HWCollectionView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print("보여랏")
         if !self.isShowingSkeletonView && self.isShowDisplayAnimation {
             cell.transform = CGAffineTransform(translationX: 0, y: 100 * 1.0)
             cell.alpha = 0

@@ -255,6 +255,10 @@ extension LostArticleListViewController: HWTableViewDatasource, HWTableViewDeleg
 }
 
 extension LostArticleListViewController: HWCollectionViewDelegate, HWCollectionViewDatasource, HWCollectionViewDelegateFlowLayout {
+    func hwCollectionViewSekeletonViewCellIdentifier(_ hwCollectionView: HWCollectionView) -> String {
+        return "LostArticleType1CollectionViewCell"
+    }
+    
     func hwCollectionView(_ collectionView: HWCollectionView, numberOfItemsInSection section: Int) -> Int {
         var numOfRows = 0
         numOfRows = self.viewModel.currentState.lostArticleData.count
