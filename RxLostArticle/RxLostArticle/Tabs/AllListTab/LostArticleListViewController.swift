@@ -48,14 +48,28 @@ class LostArticleListViewController: UIViewController,StoryboardView {
         didSet {
             switch self.currentShowViewType {
             case .tableView:
-                //todo animation
                 self.tableView.isHidden = false
-                self.collectionView.isHidden = true
+                UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                    self?.tableView.alpha = 1.0
+                }, completion: { bool in
+                })
+                UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                    self?.collectionView.alpha = 0.0
+                }, completion: { [weak self] bool in
+                    self?.collectionView.isHidden = true
+                })
                 break
             case .collectionView:
-                //todo animation
-                self.tableView.isHidden = true
                 self.collectionView.isHidden = false
+                UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                    self?.collectionView.alpha = 1.0
+                }, completion: { bool in
+                })
+                UIView.animate(withDuration: 0.2, animations: { [weak self] in
+                    self?.tableView.alpha = 0.0
+                }, completion: { [weak self] bool in
+                    self?.tableView.isHidden = true
+                })
                 break
             }
         }
@@ -279,6 +293,18 @@ extension LostArticleListViewController: HWCollectionViewDelegate, HWCollectionV
     
     func hwCollectionView(_ collectionView: HWCollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: self.collectionViewMargin, left: self.collectionViewMargin, bottom: self.collectionViewMargin, right: self.collectionViewMargin)
+    }
+    
+    func hwCollectionView(_ collectionView: HWCollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let vc = mainStoryboard.instantiateViewController(withIdentifier: "DetailArticleViewController") as? DetailArticleViewController {
+//            print("send to :\(self.viewModel.currentState.lostArticleData[indexPath.row])")
+//            vc.setInfoData(self.viewModel.currentState.lostArticleData[indexPath.row])
+            let detailArticleViewModel:DetailArticleViewModel = DetailArticleViewModel()
+            detailArticleViewModel.action.onNext(.setInfoData(data: self.viewModel.currentState.lostArticleData[indexPath.row]))
+            vc.viewModel = detailArticleViewModel
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }
